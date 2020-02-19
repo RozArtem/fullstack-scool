@@ -1,5 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const [
+ scoolsGetFindAllController, 
+ scoolsGetFindByIdController,
+ scoolPostCreateController,
+ scoolPutUpdateController,
+ scoolDeleteFindIdController
+    ] = require('../controllers/scoolControllers');
 
 
 router.get('/', async (req, res) => {
