@@ -5,16 +5,20 @@ const scoolsApiPOSTController = async (reqData) => {
 
     try {
 
-        await Scool.create(reqData);
+        const book = await Scool.create(reqData);
         
     } catch (err) {
         
         console.error(err.errormessage);
         
     }
-    
-        console.log(reqData)
-    
+
+    console.log(reqData)
+
+
+      
+        
+
 }
 
 module.exports = scoolsApiPOSTController;

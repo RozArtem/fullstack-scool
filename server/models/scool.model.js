@@ -7,19 +7,23 @@ const Schema = mongoose.Schema;
 const scoolShema = new Schema({
 
     _id: mongoose.Schema.Types.ObjectId,
+    
     theme: {
         type: String,
         required: true
     },
-    teacher: { type: Schema.Types.ObjectId, ref: 'Teacher' },
-    classroom: {
+    teacher: {
+         type: Schema.Types.ObjectId,
+          ref: 'Teacher',
+          required: true 
+    },
+    spendPlace: {
         type: String,
         required: true
     },
     spendTime: {
         type: String,
         required: true,
-        enum: ['first', 'second', 'third', 'fourth' ]
     }
         
 })
