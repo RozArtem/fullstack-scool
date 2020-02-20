@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const scoolShema = new Schema({
 
-    _id: mongoose.Schema.Types.ObjectId,
+    
     
     theme: {
         type: String,
@@ -14,8 +14,8 @@ const scoolShema = new Schema({
     },
     teacher: {
          type: Schema.Types.ObjectId,
-          ref: 'Teacher',
-          required: true 
+          ref: 'Teacher'
+         
     },
     spendPlace: {
         type: String,

@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const [
- scoolsGetFindAllController, 
- scoolsGetFindByIdController,
- scoolPostCreateController,
- scoolPutUpdateController,
- scoolDeleteFindIdController
-    ] = require('../controllers/scoolControllers');
+const scoolControllers = require('../controllers/scool.controllers');
+
+
+
+
+//@ GET /api.v1/scools 
+// find all scools
 
 
 router.get('/', async (req, res) => {
 
     try {
-            const scools = await scoolsGetFindAllController();
-            res.json(scools);
+                await scoolControllers.scoolsGetFindAllController(req, res);
+           
 
     } catch (e) {
 
@@ -26,8 +26,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 
     try {
-            const scool = await scoolsGetFindByIdController(req.params.id);
-            res.json(scool);
+                await scoolControllers.scoolsGetFindByIdController(req, res);
+            
 
     } catch (e) {
 
@@ -36,12 +36,17 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/:id', async (req, res) => {
+
+
+
+
+//@ POST /api.v1/scools
+
+router.post('/', async (req, res) => {
 
     try {
-            const scool = await scoolPostCreateController(req.body);
-            res.json(scool);
-
+                await scoolControllers.scoolPostCreateController(req, res);
+          
     } catch (e) {
 
             res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
@@ -52,8 +57,8 @@ router.post('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
 
     try {
-            const scool = await scoolPutUpdateController(req.params.id);
-            res.json(scool);
+                 await  scoolControllers.scoolPutUpdateController(req, res);
+            
 
     } catch (e) {
 
@@ -62,11 +67,26 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+
+
+router.delete('/', async (req, res) => {
+
+        try {
+                await   scoolControllers.scoolDeleteAllController(req, res);
+              
+    
+        } catch (e) {
+    
+                res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
+            
+        }
+    })
+
 router.delete('/:id', async (req, res) => {
 
     try {
-            const scool = await scoolDeleteFindIdController(req.params.id);
-            res.json(scool);
+               await scoolControllers.scoolDeleteFindIdController(req, res);
+          
 
     } catch (e) {
 
