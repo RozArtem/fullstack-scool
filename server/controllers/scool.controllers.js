@@ -1,4 +1,5 @@
 const Scool = require('../models/scool.model');
+const Teacher = require('../models/teacher.model');
 
 
 //@ GET /api.v1/scools 
@@ -51,9 +52,14 @@ exports.scoolPostCreateController = async (req, res)  => {
 
 
     try {
-
-        const scool = await Scool.create(req.body);
-        res.status(201).json(scool)
+        const [{teacher}] = req.body;
+        console.log(teacher);
+        
+        const t = Teacher.findOne({fullName: teacher});
+        console.log(t)
+        //const [theme,spendTime, spendPlace] = req.body;
+        //const scool = await Scool.create(theme, teacher, spendTime, spendPlace);
+        res.status(201).json()
         
     } catch (err) {
         
@@ -71,7 +77,12 @@ exports.scoolPutUpdateController = async (req, res)  => {
 
     try {
 
-        const scool = await Scool.findByIdAndUpdate(req.params.id);
+        
+        const [theme, teacher , spendTime, spendPlace] = req.body;
+
+
+        const scool = await Scool.findByIdAndUpdate(req.params.id, theme, teacher , spendTime, spendPlace);
+        res.status(201).json(`${scool} - is updated`)
         
     } catch (err) {
         
@@ -90,7 +101,7 @@ exports.scoolDeleteAllController = async (req, res)  => {
     try {
 
         await Scool.deleteMany();
-        res.status(200).send('удалены все элементы')
+        res.status(200).json('удалены все элементы')
         
     } catch (err) {
         

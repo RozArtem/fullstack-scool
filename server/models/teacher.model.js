@@ -6,11 +6,11 @@ const Schema = mongoose.Schema;
 
 const teacherShema = new Schema({
 
-    _id: mongoose.Schema.Types.ObjectId,
+    
 
     fullName: {
         type: String,
-        required: true
+       
     },
     scools: [{
         type: Schema.Types.ObjectId, 
@@ -21,11 +21,7 @@ const teacherShema = new Schema({
     },
     mobileNumber: { 
         type: String
-    },
-    mobileNumber: {
-        type: String,
-
-    },
+    }
         
 })
 
