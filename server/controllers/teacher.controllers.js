@@ -43,7 +43,7 @@ exports.teacherGetFindByIdController = async (req, res)  => {
 };
 
 
-//@ POST /api.v1/teacher
+//@ POST /api.v1/teachers
 // create a new teacher
 
 

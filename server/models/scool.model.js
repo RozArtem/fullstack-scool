@@ -14,9 +14,8 @@ const scoolShema = new Schema({
     },
     teacher: {
 
-        type: String,
-        /* type: Schema.Types.ObjectId,
-          ref: 'Teacher'*/
+          type: Schema.Types.ObjectId,
+          ref: 'Teacher'
          
     },
     spendPlace: {

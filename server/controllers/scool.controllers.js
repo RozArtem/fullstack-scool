@@ -10,8 +10,15 @@ exports.scoolsGetFindAllController = async (req, res) => {
 
     try {
 
-        const scools = await Scool.find();
-        res.json(scools);
+      await Scool.find().exec((err, scools) => {
+            if (err) {
+              return res.status(404).json({
+                message: 'Scools not found',
+              });
+            }
+            return res.json(scools);
+          });
+
         
     } catch (err) {
         
@@ -32,8 +39,14 @@ exports.scoolsGetFindByIdController = async (req, res)  => {
 
     try {
 
-        const scool = await Scool.findById(req.params.id);
-        res.json(scool);
+       await Scool.findById(req.params.id, (err, scool) => {
+            if (err) {
+              return res.status(404).json({
+                message: 'Scool not found',
+              });
+            }
+            return res.json(scool);
+          });
         
     } catch (err) {
         
@@ -52,14 +65,41 @@ exports.scoolPostCreateController = async (req, res)  => {
 
 
     try {
-        const [{teacher}] = req.body;
-        console.log(teacher);
+
+        const postData = {
+
+            theme: req.body.theme,
+            teacher: req.body.teacher,
+            spendPlace: req.body.spendPlace,
+            spendTime: req.body.spendTime
+
+        };
         
-        const t = Teacher.findOne({fullName: teacher});
-        console.log(t)
-        //const [theme,spendTime, spendPlace] = req.body;
-        //const scool = await Scool.create(theme, teacher, spendTime, spendPlace);
-        res.status(201).json()
+        
+
+        if (req.body.teacher) {
+
+            postData.teacher = await Teacher.findOne({fullName: req.body.teacher}, (err) => {
+                if (err) return res.json(err);
+            })
+
+                if (!postData.teacher) {res.redirect("./teachers")};
+
+            postData.teacher = postData.teacher._id
+
+        };
+
+         if (req.body.teacher === '') {postData.teacher = null};
+        
+       await Scool.create(postData, (err,scool) => {
+
+            if (err) return res.json(err);
+
+            res.status(201).json(scool);
+
+        });
+
+        
         
     } catch (err) {
         
@@ -77,12 +117,38 @@ exports.scoolPutUpdateController = async (req, res)  => {
 
     try {
 
+        const postData = {
+
+            theme: req.body.theme,
+            teacher: req.body.teacher,
+            spendPlace: req.body.spendPlace,
+            spendTime: req.body.spendTime
+
+        };
+
+        if (req.body.teacher) {
+
+            postData.teacher = await Teacher.findOne({fullName: req.body.teacher}, (err) => {
+                if (err) return res.json(err);
+            })
+
+                if (!postData.teacher) {res.redirect("./teachers")};
+
+            postData.teacher = postData.teacher._id
+
+        };
+
+         if (req.body.teacher === '') {postData.teacher = null};
+
+
+        await Scool.findByIdAndUpdate(req.params.id, postData, (err, scool) => {
+
+            if (err) return res.json(err);
+
+            res.status(201).json(`${scool} - is updated`)
+
+        });
         
-        const [theme, teacher , spendTime, spendPlace] = req.body;
-
-
-        const scool = await Scool.findByIdAndUpdate(req.params.id, theme, teacher , spendTime, spendPlace);
-        res.status(201).json(`${scool} - is updated`)
         
     } catch (err) {
         
@@ -120,8 +186,15 @@ exports.scoolDeleteFindIdController = async (req, res)  => {
 
     try {
 
-        const scool = await Scool.findByIdAndRemove(req.params.id);
-        res.status(200).send(`${scool} - удалён`)
+        await Scool.findByIdAndRemove(req.params.id, (err, scool) => {
+
+            if (err) return res.json(err);
+
+            res.status(200).send(`${scool} - was deleted`)
+
+        });
+        
+        
         
     } catch (err) {
         
