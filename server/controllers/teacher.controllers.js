@@ -9,9 +9,16 @@ exports.teacherGetFindAllController = async (req, res) => {
 
     try {
 
-        const teachers = await Teacher.find();
-        res.json(teachers);
-        
+        await Teacher.find().exec((err, teachers) => {
+            if (err) {
+              return res.status(404).json({
+                message: 'Teachers not found',
+              });
+            }
+            return res.json(teachers);
+          });
+
+
     } catch (err) {
         
         console.error(err.errormessage);
@@ -31,8 +38,15 @@ exports.teacherGetFindByIdController = async (req, res)  => {
 
     try {
 
-        const teacher = await Teacher.findById(req.params.id);
-        res.json(teacher);
+        await Teacher.findById(req.params.id, (err, teacher) => {
+            if (err) {
+              return res.status(404).json({
+                message: 'Teacher not found',
+              });
+            }
+            return res.json(teacher);
+          });
+
         
     } catch (err) {
         
@@ -51,9 +65,21 @@ exports.teacherPostCreateController = async (req, res)  => {
 
 
     try {
+        const postData = {
 
-        const teacher = await Teacher.create(req.body);
-        res.status(201).json(teacher)
+            fullName: req.body.fullName,
+            fixCabinet: req.body.fixCabinet,
+            mobileNumber: req.body.mobileNumber
+        }
+
+        await Teacher.create(postData, (err,teacher) => {
+
+            if (err) return res.json(err);
+
+            res.status(201).json(teacher);
+
+        });
+        
         
     } catch (err) {
         
@@ -70,11 +96,24 @@ exports.teacherPutUpdateController = async (req, res)  => {
 
 
     try {
+        
+        const postData = {
+            
+            fullName: req.body.fullName,
+            fixCabinet: req.body.fixCabinet,
+            mobileNumber: req.body.mobileNumber
+        }
+      
 
-        const [fullName, scools, fixCabinet, mobileNumber] = req.body;
+        await Teacher.findByIdAndUpdate(req.params.id, postData, (err, teacher) => {
 
-        const teacher = await Teacher.findByIdAndUpdate(req.params.id, fullName, scools, fixCabinet, mobileNumber);
-        res.status(201).json(`${teacher} - is updated`)
+            if (err) return res.json(err);
+
+            res.status(201).json(`${teacher} - is updated`)
+
+
+        });
+
         
     } catch (err) {
         
@@ -112,8 +151,13 @@ exports.teacherDeleteFindIdController = async (req, res)  => {
 
     try {
 
-        const teacher = await Teacher.findByIdAndRemove(req.params.id);
-        res.status(200).json(`${teacher} - удалён`)
+        await Teacher.findByIdAndRemove(req.params.id, (err, teacher) => {
+
+            if (err) return res.json(err);
+
+            res.status(200).json(`${teacher} - удалён`)
+
+        });
         
     } catch (err) {
         

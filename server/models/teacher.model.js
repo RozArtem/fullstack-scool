@@ -12,10 +12,6 @@ const teacherShema = new Schema({
         type: String,
        
     },
-    scools: [{
-        type: Schema.Types.ObjectId, 
-        ref: 'Scool'
-    }],
     fixCabinet: { 
         type: String,
     },
