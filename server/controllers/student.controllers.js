@@ -1,22 +1,19 @@
-const Scool = require('../models/scool.model');
-const Teacher = require('../models/teacher.model');
+import {Student} from '../models/student.model';
+import {Group} from '../models/group.model'
 
 
-//@ GET /api.v1/scools 
-// find all scools
-
-exports.scoolsGetFindAllController = async (req, res) => {
+exports.studentsGetFindAllController = async (req, res) => {
 
 
     try {
 
-      await Scool.find().exec((err, scools) => {
+      await Student.find().exec((err, students) => {
             if (err) {
               return res.status(404).json({
-                message: 'Scools not found',
+                message: 'Students not found',
               });
             }
-            return res.json(scools);
+            return res.json(students);
           });
 
         
@@ -32,20 +29,20 @@ exports.scoolsGetFindAllController = async (req, res) => {
 
 
 //@ GET /api.v1/scools/:id 
-// find the scool by id
+// find the student by id
 
-exports.scoolsGetFindByIdController = async (req, res)  => {
+exports.studentsGetFindByIdController = async (req, res)  => {
 
 
     try {
 
-       await Scool.findById(req.params.id, (err, scool) => {
+       await Student.findById(req.params.id, (err, student) => {
             if (err) {
               return res.status(404).json({
                 message: 'Scool not found',
               });
             }
-            return res.json(scool);
+            return res.json(student);
           });
         
     } catch (err) {
@@ -68,34 +65,34 @@ exports.scoolPostCreateController = async (req, res)  => {
 
         const postData = {
 
-            theme: req.body.theme,
-            teacher: req.body.teacher,
-            spendPlace: req.body.spendPlace,
-            spendTime: req.body.spendTime
+            fullName: req.body.fullName,
+            fixGroup: req.body.fixGroup,
+            mobileNumber: req.body.mobileNumber,
+        
 
         };
         
-        if (req.body.teacher === '') {postData.teacher = null};
+        if (req.body.fixGroup === '') {postData.fixGroup = null};
 
-        if (req.body.teacher) {
+        if (req.body.fixGroup) {
 
-            postData.teacher = await Teacher.findOne({fullName: req.body.teacher}, (err) => {
+            postData.fixGroup = await Group.findOne({groupTitle: req.body.fixGroup}, (err) => {
                 if (err) return res.json(err);
             })
 
-                if (!postData.teacher) {res.redirect("./teachers")};
+                if (! postData.fixGroup) {res.redirect("./grops")};
 
-            postData.teacher = postData.teacher._id
+                postData.fixGroup = postData.fixGroup._id
 
         };
 
          
         
-       await Scool.create(postData, (err,scool) => {
+       await Student.create(postData, (err, student) => {
 
             if (err) return res.json(err);
 
-            res.status(201).json(scool);
+            res.status(201).json(student);
 
         });
 
@@ -119,33 +116,35 @@ exports.scoolPutUpdateController = async (req, res)  => {
 
         const postData = {
 
-            theme: req.body.theme,
-            teacher: req.body.teacher,
-            spendPlace: req.body.spendPlace,
-            spendTime: req.body.spendTime
+            fullName: req.body.fullName,
+            fixGroup: req.body.fixGroup,
+            mobileNumber: req.body.mobileNumber,
+        
 
         };
 
-        if (req.body.teacher) {
+        if (req.body.fixGroup === '') {postData.fixGroup = null};
 
-            postData.teacher = await Teacher.findOne({fullName: req.body.teacher}, (err) => {
+        if (req.body.fixGroup) {
+
+            postData.fixGroup = await Group.findOne({groupTitle: req.body.fixGroup}, (err) => {
                 if (err) return res.json(err);
             })
 
-                if (!postData.teacher) {res.redirect("./teachers")};
+                if (! postData.fixGroup) {res.redirect("./grops")};
 
-            postData.teacher = postData.teacher._id
+                postData.fixGroup = postData.fixGroup._id
 
         };
 
-         if (req.body.teacher === '') {postData.teacher = null};
+     
 
 
-        await Scool.findByIdAndUpdate(req.params.id, postData, (err, scool) => {
+        await Student.findByIdAndUpdate(req.params.id, postData, (err, student) => {
 
             if (err) return res.json(err);
 
-            res.status(201).json(`${scool} - is updated`)
+            res.status(201).json(`${student} - is updated`)
 
         });
         
@@ -166,7 +165,7 @@ exports.scoolDeleteAllController = async (req, res)  => {
 
     try {
 
-        await Scool.deleteMany();
+        await Student.deleteMany();
         res.status(200).json('удалены все элементы')
         
     } catch (err) {
@@ -186,11 +185,11 @@ exports.scoolDeleteFindIdController = async (req, res)  => {
 
     try {
 
-        await Scool.findByIdAndRemove(req.params.id, (err, scool) => {
+        await Student.findByIdAndRemove(req.params.id, (err, student) => {
 
             if (err) return res.json(err);
 
-            res.status(200).send(`${scool} - was deleted`)
+            res.status(200).send(`${student} - was deleted`)
 
         });
         

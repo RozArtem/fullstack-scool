@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const studentShema = new Schema({
 
-    _id: mongoose.Schema.Types.ObjectId,
+
 
     fullName: {
         type: String,
@@ -19,13 +19,8 @@ const studentShema = new Schema({
     },
     mobileNumber:{
          type: String
-    },
-    uniqNumber: {
-        type: String,
-        required: true
-
     }
-        
+   
 })
 
 
