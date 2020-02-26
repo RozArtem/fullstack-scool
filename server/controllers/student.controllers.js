@@ -1,5 +1,5 @@
-import {Student} from '../models/student.model';
-import {Group} from '../models/group.model'
+const Student = require('../models/student.model');
+const Group = require('../models/group.model');
 
 
 
@@ -203,5 +203,3 @@ exports.studentDeleteFindIdController = async (req, res)  => {
     }
 
 };
-
-module.exports = StudentControlers;

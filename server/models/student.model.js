@@ -15,7 +15,7 @@ const studentShema = new Schema({
     fixGroup: { 
         type: Schema.Types.ObjectId, 
         ref: 'Group',
-        required: true 
+        //required: true 
     },
     mobileNumber:{
          type: String
