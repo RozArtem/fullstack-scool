@@ -11,7 +11,7 @@ const connectDB = require('./db/db')
 
 const scools = require('./routes/scool.rotes');
 const teachers = require('./routes/teacher.routes');
-
+const students = require('./routes/student.rotes')
 
 
 const app = express();
@@ -32,6 +32,7 @@ app.use(express.json());
 
 app.use('/api/v1/scools', scools);
 app.use('/api/v1/teachers', teachers);
+app.use('/api/v1/students', students);
 
 
 

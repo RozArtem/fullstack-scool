@@ -2,7 +2,8 @@ import {Student} from '../models/student.model';
 import {Group} from '../models/group.model'
 
 
-exports.studentsGetFindAllController = async (req, res) => {
+
+exports.studentGetFindAllController = async (req, res) => {
 
 
     try {
@@ -31,7 +32,7 @@ exports.studentsGetFindAllController = async (req, res) => {
 //@ GET /api.v1/scools/:id 
 // find the student by id
 
-exports.studentsGetFindByIdController = async (req, res)  => {
+exports.studentGetFindByIdController = async (req, res)  => {
 
 
     try {
@@ -58,7 +59,7 @@ exports.studentsGetFindByIdController = async (req, res)  => {
 // create a new scool
 
 
-exports.scoolPostCreateController = async (req, res)  => {
+exports.studentPostCreateController = async (req, res)  => {
 
 
     try {
@@ -109,7 +110,7 @@ exports.scoolPostCreateController = async (req, res)  => {
 //@ PUT /api.v1/scools/:id 
 // update the scool by id
 
-exports.scoolPutUpdateController = async (req, res)  => {
+exports.studentPutUpdateController = async (req, res)  => {
 
 
     try {
@@ -160,7 +161,7 @@ exports.scoolPutUpdateController = async (req, res)  => {
 //@ DELETE /api.v1/scools
 // delete all scools
 
-exports.scoolDeleteAllController = async (req, res)  => {
+exports.studentDeleteAllController = async (req, res)  => {
 
 
     try {
@@ -180,7 +181,7 @@ exports.scoolDeleteAllController = async (req, res)  => {
 // delete the scool by id
 
 
-exports.scoolDeleteFindIdController = async (req, res)  => {
+exports.studentDeleteFindIdController = async (req, res)  => {
 
 
     try {
@@ -203,3 +204,4 @@ exports.scoolDeleteFindIdController = async (req, res)  => {
 
 };
 
+module.exports = StudentControlers;
